@@ -13,32 +13,34 @@ searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 function onInput() {
   const value = searchBox.value.trim();
   clearAll();
-  fetchCountries(value)
-    .then(countries => {
-      if (countries.length > 10) {
-        Notify.info(
-          'Too many matches found. Please enter a more specific name.',
-          {
-            timeout: 4000,
-            position: 'center-top',
-            width: '400px',
-          }
-        );
-      } else if (countries.length >= 2 && countries.length <= 10) {
-        const list = countries.reduce(
-          (markup, country) => createCountriesList(country) + markup,
-          ''
-        );
-        updateCountriesList(list);
-      } else {
-        const card = countries.reduce(
-          (markup, country) => createCountryCard(country) + markup,
-          ''
-        );
-        updateCountryCard(card);
-      }
-    })
-    .catch(onError);
+  if (value) {
+    fetchCountries(value)
+      .then(countries => {
+        if (countries.length > 10) {
+          Notify.info(
+            'Too many matches found. Please enter a more specific name.',
+            {
+              timeout: 4000,
+              position: 'center-top',
+              width: '400px',
+            }
+          );
+        } else if (countries.length >= 2 && countries.length <= 10) {
+          const list = countries.reduce(
+            (markup, country) => createCountriesList(country) + markup,
+            ''
+          );
+          updateCountriesList(list);
+        } else {
+          const card = countries.reduce(
+            (markup, country) => createCountryCard(country) + markup,
+            ''
+          );
+          updateCountryCard(card);
+        }
+      })
+      .catch(onError);
+  }
 }
 
 function createCountriesList({ name, flags }) {
