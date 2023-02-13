@@ -49,14 +49,18 @@ function createCountriesList({ name, flags }) {
 }
 
 function createCountryCard({ name, capital, population, flags, languages }) {
+  const languageList = languages.map(language => language.name);
   return `<div style="display: flex; align-items: center;">  <img src="${
     flags.svg
   }" width="30px" height="20px">
-  <h2>${name}</h2></div>
+  <h2 style="margin-left: 10px;">${name}</h2></div>
   <ul style = "list-style: none; padding: 0">
-  <li><b>Capital:</b>${capital}</li>
-  <li><b>Population:</b>${population}</li>
-  <li><b>Languages:</b>${Object.values(languages)}</li>
+  <li><b style="margin-right: 5px;">Capital:</b>${capital}</li>
+  <li><b style="margin-right: 5px;">Population:</b>${population}</li>
+  <li><b style="margin-right: 5px;">Languages:</b>${Object.values(
+    languageList
+  ).join(', ')}
+</li>
   </ul>`;
 }
 
